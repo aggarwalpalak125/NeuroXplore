@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('/static/images/img11.webp') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: stretch;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .dialog-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            flex: 1; /* Allow both boxes to take equal space */
+            text-align: left;
+        }
+
+        .result-row {
+            margin-bottom: 15px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #00796b;
+        }
+
+        .value {
+            margin-left: 10px;
+            color: #455a64;
+        }
+
+        .health-status {
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #d32f2f;
+        }
+
+        .heading {
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+
+        .image-box img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-box .percentage {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #00796b;
+            text-align: center;
+        }
+
+        .go-back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00796b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .go-back-button:hover {
+            background-color: #004d40;
+        }
+
+        @media (max-width: 800px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dialog-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- User Information Box -->
+        <div class="dialog-box">
+            <div class="heading">Health Prediction</div>
+            <div class="result-row">
+                <span class="label">Name:</span>
+                <span class="value">{{ name }}</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Age:</span>
+                <span class="value">{{ age }}</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Gender:</span>
+                <span class="value">{{ gender.capitalize() }}</span>
+            </div>
+            <div class="result-row">
+                <span class="label">Health Status:</span>
+                <span class="value health-status">{{ result }}</span>
+            </div>
+            <a href="javascript:history.back()" class="go-back-button">Go Back</a>
+        </div>
+
+        <!-- Image and Percentage Box -->
+        <div class="dialog-box">
+            <div class="heading">Uploaded Image</div>
+            <div class="image-box">
+                <img src="{{ image_path }}" alt="Uploaded MRI Scan">
+                <div class="percentage">Tumour Probabililty: {{ percentage }}%</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
