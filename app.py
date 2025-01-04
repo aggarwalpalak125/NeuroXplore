@@ -1,5 +1,6 @@
 import os
 import tensorflow as tf
+from flask import send_from_directory
 from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from PIL import Image
@@ -24,6 +25,7 @@ def allowed_file(filename):
 @app.route('/')
 def index():
     return render_template('front.html') 
+
 from flask import send_from_directory
 
 @app.route('/uploads/<filename>')
@@ -58,12 +60,15 @@ def predict():
         prediction_percentage = prediction[0][0] * 100  # Convert to percentage
         result = 'Healthy' if prediction[0][0] < 0.5 else 'Tumour'
         
+        name = request.form.get('fullName')
+        age = request.form.get('age')
+        gender = request.form.get('gender')
         # Redirect to the result page
         return redirect(url_for('result', result=result, 
                                 percentage=f"{prediction_percentage:.2f}", 
-                                name=request.form['fullName'],
-                                age=request.form['age'], 
-                                gender=request.form['gender'], 
+                                name=name,
+                                age=age, 
+                                gender=gender, 
                                 image_path=file_path))
     
     return 'File not allowed'
@@ -96,5 +101,5 @@ def result():
 if __name__ == '__main__':
     # Ensure the upload folder exists
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-    port = int(os.environ.get('PORT', 5000))  # Use Render's port
-    app.run(debug=True, host='0.0.0.0', port=port)
+    port = int(os.environ.get('PORT', 10000))  # Use Render's default port or a custom one
+    app.run(debug=False, host='0.0.0.0', port=port)
