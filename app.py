@@ -60,16 +60,17 @@ def predict():
         prediction_percentage = prediction[0][0] * 100  # Convert to percentage
         result = 'Healthy' if prediction[0][0] < 0.5 else 'Tumour'
         
-        name = request.form.get('fullName')
-        age = request.form.get('age')
-        gender = request.form.get('gender')
+        
         # Redirect to the result page
-        return redirect(url_for('result', result=result, 
-                                percentage=f"{prediction_percentage:.2f}", 
-                                name=name,
-                                age=age, 
-                                gender=gender, 
-                                image_path=file_path))
+        return render_template(
+                 'result.html',
+                    name=request.form['fullName'],
+                    age=request.form['age'],
+                    gender=request.form['gender'],
+                    result=result,
+                     percentage=f"{prediction_percentage:.2f}",
+                    image_path=file_path.split('/')[-1]  # Pass only the filename
+)
     
     return 'File not allowed'
 
