@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: your-service-name
+    env: python
+    region: oregon  # Choose a region: oregon, frankfurt, singapore, etc.
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    pythonVersion: 3.12  # Specify the Python version
+    autoDeploy: true  # Automatically deploy on Git push
