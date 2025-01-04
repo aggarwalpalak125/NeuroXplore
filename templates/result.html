@@ -135,7 +135,8 @@
         <div class="dialog-box">
             <div class="heading">Uploaded Image</div>
             <div class="image-box">
-                <img src="{{ image_path }}" alt="Uploaded MRI Scan">
+                <img src="{{ url_for('uploaded_file', filename=image_path.split('/')[-1]) }}" alt="Uploaded MRI Scan">
+
                 <div class="percentage">Tumour Probabililty: {{ percentage }}%</div>
             </div>
         </div>
